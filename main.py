@@ -14,7 +14,7 @@ import asyncio
 #biblio to install PyNaCl : Command : pip install PyNaCl
 
 players = {}
-reddit = praw.Reddit(client_id="KTWWAd45SNhgaA",client_secret="d09wNkztWALKaE055PFL8aI73j1NVg",username="Reference_Background",password="clashamin",user_agent="whatever")
+reddit = praw.Reddit(client_id="YOUR_CLIENT_ID_REDDIT",client_secret="d09wNkztWALKaE055PFL8aI73j1NVg",username="USER_NAME",password="PASSWORD",user_agent="whatever")
 
 youtube_dl.utils.bug_reports_message = lambda: ''
 
@@ -305,4 +305,4 @@ class YTDLSource(discord.PCMVolumeTransformer):
 
 
 keepAlive()
-client.run("ODEwODYwMjE1NzY3MjY5NDM2.YCpybA.HpfTO6wYAdITyBDhkOi-rQLWprk")
+client.run("yourAppKey")
