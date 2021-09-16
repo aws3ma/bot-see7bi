@@ -304,21 +304,5 @@ class YTDLSource(discord.PCMVolumeTransformer):
 
 
 
-
-
-async def komoTsa7aro(ctx):
-  now = datetime.now().strftime("%H%M")
-  print(int(now)+100)
-  try:
-    Timer(5.0, komoTsa7aro(ctx)).start()
-    channel = discord.utils.get(ctx.guild.channels, name='💻___Coding Ⅰ ___💻')
-    if(int(now)+100 > 200 ):
-      await play(ctx,'https://www.youtube.com/watch?v=xB8KucG0Clw',channel)
-      #await ctx.send(" 9omo tsa7aro ")
-  except:
-    print("waiting for setup")
-
-komoTsa7aro(None)
-
 keepAlive()
 client.run("ODEwODYwMjE1NzY3MjY5NDM2.YCpybA.HpfTO6wYAdITyBDhkOi-rQLWprk")
