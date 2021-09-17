@@ -410,5 +410,5 @@ def setup(bot):
     bot.add_cog(Music(bot))
 
 setup(client)
-token = "ODg4MDUwOTI2MDgwODkzMDA4.YUND3w.J4ofu__vdCmFjKd5NPsVr5MwJVQ"
+token = os.getenv("DISCORD_TOKEN")
 client.run(token)  # Starts the bot
