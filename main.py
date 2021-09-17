@@ -412,4 +412,4 @@ def setup(bot):
 
 setup(client)
 load_dotenv()
-client.run(str(os.getenv("DISCORD_TOKEN")))
+client.run(os.getenv("DISCORD_TOKEN"),bot=False)
