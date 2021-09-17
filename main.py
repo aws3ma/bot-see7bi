@@ -4,6 +4,7 @@ import asyncio
 import itertools
 import sys
 import traceback
+from dotenv import load_dotenv
 from async_timeout import timeout
 from functools import partial
 from youtube_dl import YoutubeDL
@@ -410,5 +411,6 @@ def setup(bot):
     bot.add_cog(Music(bot))
 
 setup(client)
+load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
 client.run(token)  # Starts the bot
