@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+Flask = "==2.0.1"
+praw = "==7.4.0"
+async-timeout = "==3.0.1"
+discord = "==1.7.3"
+python-dotenv = "==0.19.0"
+"discord.py" = "==1.7.3"
+PyNaCl = "==1.4.0"
+APScheduler = "==3.9.1"
+bs4 = "==0.0.1"
+youtube-dl = "*"
+ffmpeg = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
