@@ -9,7 +9,10 @@ from dotenv import load_dotenv
 from async_timeout import timeout
 from functools import partial
 from youtube_dl import YoutubeDL
+<<<<<<< HEAD:main.py
 import os
+=======
+>>>>>>> ac22513118b4afd9ec0bbd15c1eac2f398d4890d:main4.py
 
 client = commands.bot.Bot(command_prefix='!')
 # pip install PyNaCl
@@ -506,9 +509,13 @@ load_dotenv()
 keepAlive()
 # token = os.environ.get("DISCORD_BOT_SECRET")
 # Starts the bot
+<<<<<<< HEAD:main.py
 # defining Env variable with 'HOME' as value
 # add variable env in your pc with key "DISCORD_TOKEN"
 key = "DISCORD_TOKEN"
 
 value = os.getenv(key, default=None)
 client.run(value)
+=======
+client.run("MTAyODI1MDUyMDQyODc0NDczNA.G1qQH8.Uyu2srZjTbh9HZFSl_94kWyGFR9RWL3ALGLk-g")
+>>>>>>> ac22513118b4afd9ec0bbd15c1eac2f398d4890d:main4.py
