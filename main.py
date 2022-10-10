@@ -12,15 +12,8 @@ from youtube_dl import YoutubeDL
 import os
 
 client = commands.bot.Bot(command_prefix='!')
-# pip install PyNaCl
-# pip install discord
 ytdlopts = {
     'format': 'bestaudio/best',
-    # 'postprocessors': [{
-    #     'key': 'FFmpegExtractAudio',
-    #     'preferredcodec': 'mp3',
-    #     'preferredquality': '192',
-    # }],
     'outtmpl': 'downloads/%(extractor)s-%(id)s-%(title)s.%(ext)s',
     'restrictfilenames': True,
     'noplaylist': True,
@@ -31,13 +24,12 @@ ytdlopts = {
     'no_warnings': True,
     'default_search': 'auto',
     'source_address': '0.0.0.0',  # ipv6 addresses cause issues sometimes
-    # 'extractaudio': True,
-    # 'audioformat': 'mp3',
 }
 FFMPEG_OPTIONS = {
-        'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
-        'options': '-vn',
-    }
+    'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
+    'options': '-vn',
+}
+
 
 @client.event
 async def on_message(message):
@@ -45,8 +37,7 @@ async def on_message(message):
         return
     # await message.channel.send("Salem")
     await client.process_commands(message)
-    if message.content.startswith("$$ 3ak3ak"):
-        print("3ak3ak")
+    if message.content.startswith("!salem"):
         await message.channel.send("Salem")
 
 ffmpegopts = {'before_options': '-nostdin', 'options': '-vn'}
@@ -86,7 +77,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         to_run = partial(ytdl.extract_info, url=search, download=download)
         data = await loop.run_in_executor(None, to_run)
 
-        if 'entries' in data: 
+        if 'entries' in data:
             # take first item from a playlist
             data = data['entries'][0]
 
@@ -101,7 +92,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
                 'title': data['title']
             }
 
-        return cls(discord.FFmpegPCMAudio(executable="C:\\ffmpeg\\bin\\ffmpeg.exe",source=source),
+        return cls(discord.FFmpegPCMAudio(executable="C:\\ffmpeg\\bin\\ffmpeg.exe", source=source),
                    data=data,
                    requester=ctx.author)
 
@@ -117,7 +108,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
                          download=False)
         data = await loop.run_in_executor(None, to_run)
 
-        return cls(discord.FFmpegPCMAudio(executable="C:\\ffmpeg\\bin\\ffmpeg.exe",source=data['url']),
+        return cls(discord.FFmpegPCMAudio(executable="C:\\ffmpeg\\bin\\ffmpeg.exe", source=data['url']),
                    data=data,
                    requester=requester)
 
@@ -310,7 +301,7 @@ class Music(commands.Cog):
 
         if not vc:
             await ctx.invoke(self.connect_)
-        
+
         player = self.get_player(ctx)
         loop = asyncio.get_event_loop()
         newData = []
@@ -474,32 +465,6 @@ def setup(bot):
     bot.add_cog(Music(bot))
 
 
-"""async def checkArticlesDispo():
-    url = "https://www.tunisianet.com.tn/ecran-ordinateur-tunisie/50225-ecran-gamer-dell-27-full-hd-144hz.html"
-    result = requests.get(url).text
-    doc = BeautifulSoup(result, "html.parser")
-
-    Dispo = doc.find_all(
-        id="stock_availability")[0].span.string != "Hors stock"
-    if Dispo:
-        #send this to some chanel
-        channel = client.get_channel(840384493428932620)
-        await channel.send(
-            f"Ejri Ejri ya Amin <@{514521483586961438}> Dell rej3et !!")
-
-
-def runWhatchers():
-    asyncio.run(checkArticlesDispo())
-
-
-@client.event
-async def on_ready():
-    scheduler = BlockingScheduler()
-    scheduler.add_job(runWhatchers, 'interval', hours=1)
-    scheduler.start()
-"""
-
-
 setup(client)
 load_dotenv()
 # client.run(os.environ.get("DISCORD_TOKEN"))
@@ -512,4 +477,3 @@ key = "DISCORD_TOKEN"
 
 value = os.getenv(key, default=None)
 client.run(value)
-
