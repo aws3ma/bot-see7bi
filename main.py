@@ -25,10 +25,6 @@ ytdlopts = {
     'default_search': 'auto',
     'source_address': '0.0.0.0',  # ipv6 addresses cause issues sometimes
 }
-FFMPEG_OPTIONS = {
-    'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
-    'options': '-vn',
-}
 
 
 @client.event
@@ -40,7 +36,10 @@ async def on_message(message):
     if message.content.startswith("!salem"):
         await message.channel.send("Salem")
 
-ffmpegopts = {'before_options': '-nostdin', 'options': '-vn'}
+ffmpegopts = {
+    'options': '-vn',
+    "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5"
+}
 
 ytdl = YoutubeDL(ytdlopts)
 
@@ -92,7 +91,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
                 'title': data['title']
             }
 
-        return cls(discord.FFmpegPCMAudio(executable="C:\\ffmpeg\\bin\\ffmpeg.exe", source=source),
+        return cls(discord.FFmpegPCMAudio(executable="C:\\ffmpeg\\bin\\ffmpeg.exe", source=source, options=ffmpegopts),
                    data=data,
                    requester=ctx.author)
 
