@@ -10,6 +10,8 @@ from async_timeout import timeout
 from functools import partial
 from youtube_dl import YoutubeDL
 import os
+import random
+
 
 client = commands.bot.Bot(command_prefix='!')
 ytdlopts = {
@@ -23,18 +25,8 @@ ytdlopts = {
     'quiet': True,
     'no_warnings': True,
     'default_search': 'auto',
-    'source_address': '0.0.0.0',  # ipv6 addresses cause issues sometimes
+    'source_address': '0.0.0.0',
 }
-
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    # await message.channel.send("Salem")
-    await client.process_commands(message)
-    if message.content.startswith("!salem"):
-        await message.channel.send("Salem")
 
 ffmpegopts = {
     'options': '-vn',
@@ -170,7 +162,7 @@ class MusicPlayer:
                                           after=lambda _: self.bot.loop.
                                           call_soon_threadsafe(self.next.set))
             self.np = await self._channel.send(
-                f'**Now Playing:** `{source.title}` requested by '
+                f'**laghneya hedhi:** `{source.title}` dhou9 s7ayebna '
                 f'`{source.requester}`')
             await self.next.wait()
 
@@ -281,7 +273,7 @@ class Music(commands.Cog):
                 raise VoiceConnectionError(
                     f'Connecting to channel: <{channel}> timed out.')
 
-        await ctx.send(f'Connected to: **{channel}**', delete_after=20)
+        await ctx.send(f'hani fi: **{channel}**', delete_after=20)
 
     @commands.command(name='p', aliases=['play'])
     async def play_(self, ctx, *, search: str):
@@ -293,7 +285,7 @@ class Music(commands.Cog):
         search: str [Required]
             The song to search and retrieve using YTDL. This could be a simple search, an ID or URL.
         """
-        print('Downloading song')
+        await ctx.send(f'hani nsob fi : **{search}** mil youtube', delete_after=20)
         await ctx.trigger_typing()
 
         vc = ctx.voice_client
@@ -313,6 +305,7 @@ class Music(commands.Cog):
                 newData = data['entries']
 
         if (len(newData) != 0):
+            random.shuffle(newData)
             for ghneya in newData:
                 source = await YTDLSource.create_source(ctx,
                                                         ghneya["webpage_url"],
@@ -336,13 +329,13 @@ class Music(commands.Cog):
         vc = ctx.voice_client
 
         if not vc or not vc.is_playing():
-            return await ctx.send('I am not currently playing anything!',
+            return await ctx.send('Hani pausit see7bi!',
                                   delete_after=20)
         elif vc.is_paused():
             return
 
         vc.pause()
-        await ctx.send(f'**`{ctx.author}`**: Paused the song!')
+        await ctx.send(f'**`{ctx.author}`**: pauselna laghneya see7bi!')
 
     @commands.command(name='resume')
     async def resume_(self, ctx):
@@ -350,7 +343,7 @@ class Music(commands.Cog):
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently playing anything!',
+            return await ctx.send('ch3ana na3emlo see7bi!',
                                   delete_after=20)
         elif not vc.is_paused():
             return
@@ -364,7 +357,7 @@ class Music(commands.Cog):
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently playing anything!',
+            return await ctx.send('bye bye ghneyea!',
                                   delete_after=20)
 
         if vc.is_paused():
@@ -381,12 +374,12 @@ class Music(commands.Cog):
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently connected to voice!',
+            return await ctx.send('mafi ghna see7bi!',
                                   delete_after=20)
 
         player = self.get_player(ctx)
         if player.queue.empty():
-            return await ctx.send('There are currently no more queued songs.')
+            return await ctx.send('kamelna be3 w rawa7 see7bi.')
 
         # Grab up to 5 entries from the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, 100))
@@ -404,12 +397,12 @@ class Music(commands.Cog):
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently connected to voice!',
+            return await ctx.send('mraya7 see7bi!',
                                   delete_after=20)
 
         player = self.get_player(ctx)
         if not player.current:
-            return await ctx.send('I am not currently playing anything!')
+            return await ctx.send('sekit see7bi!')
 
         try:
             # Remove our previous now_playing message.
@@ -431,11 +424,11 @@ class Music(commands.Cog):
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently connected to voice!',
+            return await ctx.send('mraya7 see7bi!',
                                   delete_after=20)
 
         if not 0 < vol < 101:
-            return await ctx.send('Please enter a value between 1 and 100.')
+            return await ctx.send('bin 1 w 100 see7bi.')
 
         player = self.get_player(ctx)
 
@@ -443,7 +436,7 @@ class Music(commands.Cog):
             vc.source.volume = vol / 100
 
         player.volume = vol / 100
-        await ctx.send(f'**`{ctx.author}`**: Set the volume to **{vol}%**')
+        await ctx.send(f'**`{ctx.author}`**: 7atelna volume 3al **{vol}%**')
 
     @commands.command(name='stop')
     async def stop_(self, ctx):
@@ -454,7 +447,7 @@ class Music(commands.Cog):
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently playing anything!',
+            return await ctx.send('hana rawa7na see7bi!',
                                   delete_after=20)
 
         await self.cleanup(ctx.guild)

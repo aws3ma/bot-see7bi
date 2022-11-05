@@ -1,12 +1,11 @@
 from flask import Flask
-from threading import Thread , Timer
-from datetime import datetime
+from threading import Thread
 
 app = Flask('')
 
 @app.route('/')
 def home():
-  return '<h1>wa 9adar bot</h1>'
+  return '<h1>wa bot see7bi</h1>'
 def run():
   app.run(host='0.0.0.0',port=8080)
 
